@@ -1,0 +1,19 @@
+{
+  "name": "todo_li_pack",
+  "version": "1.0.0",
+  "description": "ToDo List App_NodeJS",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/drkessler91/ToDo_List.git"
+  },
+  "author": "Dror Kessler",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/drkessler91/ToDo_List/issues"
+  },
+  "homepage": "https://github.com/drkessler91/ToDo_List#readme"
+}
