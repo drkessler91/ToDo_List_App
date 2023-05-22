@@ -1,0 +1,110 @@
+import React, { useEffect, useState }  from 'react';
+import axios from 'axios';
+
+
+const TodoListPage = () => {
+  const handleAddTodo = () => {
+    const newItem = {
+      // Define the properties of the new todo item
+      // Example:
+      id: 1,
+      title: 'New Todo',
+    };
+
+    // Send a POST request to add a new todo item
+    fetch('/todo', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(newItem),
+    })
+      .then(response => response.json())
+      .then(data => console.log(data))
+      .catch(error => console.error(error));
+  };
+
+  const handleRemoveTodo = () => {
+    const itemId = 1; // Provide the ID of the todo item to remove
+
+    // Send a POST request to remove a todo item
+    fetch(`/todo/${itemId}`, {
+      method: 'POST',
+    })
+      .then(response => response.json())
+      .then(data => console.log(data))
+      .catch(error => console.error(error));
+  };
+
+  const handleUpdateTodo = () => {
+    const itemId = 1; // Provide the ID of the todo item to update
+    const updatedItem = {
+      // Define the updated properties of the todo item
+      // Example:
+      title: 'Updated Todo',
+    };
+
+    // Send a PUT request to update a todo item
+    fetch(`/todo/${itemId}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(updatedItem),
+    })
+      .then(response => response.json())
+      .then(data => console.log(data))
+      .catch(error => console.error(error));
+  };
+
+  const handleDeleteList = () => {
+    const listName = 'default list'; // Provide the name of the list to delete
+
+    // Send a DELETE request to delete the todo list
+    fetch(`/todo_list/${listName}`, {
+      method: 'DELETE',
+    })
+      .then(response => response.json())
+      .then(data => console.log(data))
+      .catch(error => console.error(error));
+  };
+
+  
+  // Send a GET request to fetch all todo items
+  const HandleFetchTodos = () => {
+    const [todoList, setTodos] = useState([]);
+  
+      useEffect(() => {
+        axios.get('/list')
+          .then(response => {
+            setTodos(response.data);
+          })
+          .catch(error => {
+            console.error('Error fetching todo list:', error);
+          });
+      }, []);
+  
+  return (
+    <div>
+      <h1>Todo List</h1>
+      <button onClick={handleAddTodo}>Add Todo item</button>
+      <button onClick={handleRemoveTodo}>Remove Todo item</button>
+      <button onClick={HandleFetchTodos}>Fetch all list</button>
+      <button onClick={handleUpdateTodo}>Update Todo item</button>
+      <button onClick={handleDeleteList}>Delete List</button>
+
+      <p>
+        <ul>
+          {todoList.map(todo => (
+            <li key={todo._id}>{todo.title}</li>
+          ))}
+        </ul>
+      </p>
+    </div>
+    
+  );
+};
+    };
+
+
+export default TodoListPage;

@@ -1,0 +1,57 @@
+/remove todo item, POST request
+app.post('/todo/:id', (req, res) =>{
+    const itemReq = req.params.id;
+        
+    if(todoList.items.some(item => item.id  === itemReq)){
+        //The some method is used to check if any item in the array satisfies the given condition
+        const index = todoList.items.findIndex(item => item.id  === itemReq);
+        if(index !== -1){
+            todoList.splice(index, 1);
+            res.status(201).json({message:'item removed seccesfully', itemReq});
+        }
+        else{
+            res.status(500).json({message:'failed to remove item', itemReq});
+        }
+    }
+    else{
+        res.status(500).json({message:'error in id', index});
+    }
+});
+
+//fetch todo list, GET request
+app.get('/list/', (req, res) =>{
+    if(todoList.length === 0){
+        res.status(500).send({message:'list is empty'});
+    }
+    else{
+        res.json(todoList.items);
+    }
+});
+
+//Update item in todo list, PUT request
+app.put('/todo/:id', (req, res) =>{
+    const itemReq = req.body;
+    const id = req.params.id;
+    const index = todoList.items.findIndex(item => item.id  === id);
+
+    if(index !== -1){
+        todoList[index] = itemReq;
+        res.status(201).json({message:'item updated seccesfully at position ' + id, newItem});
+    }
+    else{
+        res.status(404).send({message:'item not found in list'});
+    }
+});
+
+//delete todo list, DELETE request
+app.delete('/todo_list/:name', (req, res) =>{   
+    const listName = req.params.name;
+        
+    if(todoList.name === listName){ 
+        todoList = [];
+        res.status(201).json({message:'list deleted seccesfully'});
+    }
+    else{
+        res.status(404).json({message:'list not found'});
+    }
+});
